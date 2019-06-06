@@ -1,5 +1,4 @@
 //Barak Levy
-//ID 203280185
 //Ex3 server 
 #include "threadpool.h"
 #include <stdio.h> 
