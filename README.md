@@ -1,5 +1,7 @@
 # http-server-c
 implementation of http server in c 
+in order to enable multithreaded program the server should create threads that handle the connection with the client
+every time the server need thread it take one from the pool or enqueue the request if there is no availeble thread in the pool
 ## usage  
 
 `./server <port> <pool-size> <max-number-of-request>` 
