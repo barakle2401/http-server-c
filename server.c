@@ -1,5 +1,5 @@
 //Barak Levy
-//Ex3 server 
+//server 
 #include "threadpool.h"
 #include <stdio.h> 
 #include <sys/types.h> 
@@ -46,14 +46,14 @@ int main(int argc ,char** argv)
         exit(0);
     }
     int sockfd, newsockfd, portno;        
-	struct sockaddr_in serv_addr;
+    struct sockaddr_in serv_addr;//configure structs socket communication
     struct sockaddr_in addr;
-    portno = atoi(argv[1]); //open the port 
+    portno = atoi(argv[1]); //open port 
     int max_num_of_req = atoi(argv[3]);
 	serv_addr.sin_family = AF_INET;  
 	serv_addr.sin_addr.s_addr = htonl(INADDR_ANY); 
 	serv_addr.sin_port = htons(portno); 
-    sockfd = socket(PF_INET,SOCK_STREAM,0);
+    sockfd = socket(PF_INET,SOCK_STREAM,0);//get new socket
     socklen_t addr_len = sizeof(addr);    
     // create pool
     threadpool* pool =create_threadpool(atoi(argv[2]));//create pool if pool equal null mean has any usage problem in create pool func
@@ -69,7 +69,7 @@ int main(int argc ,char** argv)
         exit(0);
     }  
 	
-    if (bind(sockfd,(struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
+    if (bind(sockfd,(struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)//bind socket
     {
         perror("bind\n");
         destroy_threadpool(pool);
@@ -142,7 +142,7 @@ int readAndResponse(void * fd)//the function threads runs
     }
     char * path = strtok(NULL," ");
     req->path = (char*)malloc(strlen(path)+1);
-    if(req->path==NULL)
+    if(req->path==NULL)//aloocate failed
     {
         
         errorResponse(500,f,"");
@@ -168,7 +168,7 @@ int readAndResponse(void * fd)//the function threads runs
         return 1;
 
     }
-    if(strcmp(req->path,"/")==0)//case only / fix to /./ main directory
+    if(strcmp(req->path,"/")==0)//case only / than fix to /./ main directory
     {
         free(req->path);
         req->path = (char*)malloc(4);
